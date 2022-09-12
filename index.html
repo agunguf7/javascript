@@ -1,0 +1,75 @@
+<script>
+  let pegawai = "Ridwan",
+    jabatan = "Manager",
+    status = "Menikah",
+    gapok,
+    tunjanganJabatan,
+    bpjs,
+    tunjanganKeluarga,
+    totalGaji;
+
+  // information
+  var profile = `<div style="margin-bottom:20px">`;
+  profile += '<h4 style="margin-bottom:10px">Profile Pegawai</h4>';
+  (profile += "<span>Nama : " + pegawai + "</span><br>"),
+    (profile += "<span>Jabatan : " + jabatan + "</span><br>"),
+    (profile += "<span>Status : " + status + "</span><br>");
+  profile += "</div>";
+
+  // perhitungan gaji pokok sesuai jabatan
+  if (jabatan === "Manager") {
+    // perhitungan gaji pokok
+    gapok = 15000000;
+  } else if (jabatan === "Asisten Manager") {
+    gapok = 10000000;
+  } else {
+    gapok = 5000000;
+  }
+  // perhitungan tunjanganJabatan
+  tunjanganJabatan = gapok * (15 / 100);
+  bpjs = gapok * (10 / 100);
+  tunjanganKeluarga = status === "Menikah" ? gapok * (20 / 100) : 0;
+  totalGaji = gapok + tunjanganJabatan + bpjs + tunjanganKeluarga;
+
+  var table = `<table border="1" cellpadding="10" style="width:100%">`;
+  // heading
+  table += "<thead>";
+  table += "<tr>";
+  table += "<th align=''>GAJI</th>";
+  table += "<th align=''>NOMINAL</th>";
+  table += "</tr>";
+  table += "</thead>";
+
+  // body
+  table += "<tbody>";
+  table += "<tr>";
+  table += "<td align='left'>Gaji Pokok</td>";
+  table += "<td align='right'>" + gapok + "</td>";
+  table += "</tr>";
+  table += "<tr>";
+  table += "<td align='left'>Tunjangan Jabatan</td>";
+  table += "<td align='right'>" + tunjanganJabatan + "</td>";
+  table += "</tr>";
+  table += "<tr>";
+  table += "<td align='left'>BPJS</td>";
+  table += "<td align='right'>" + bpjs + "</td>";
+  table += "</tr>";
+  table += "<tr>";
+  table += "<td align='left'>Tunjangan Keluarga</td>";
+  table += "<td align='right'>" + tunjanganKeluarga + "</td>";
+  table += "</tr>";
+  table += "</tbody>";
+
+  // footer
+  table += "<tfoot>";
+  table += "<tr>";
+  table += "<th align=''>TOTAL GAJI</th>";
+  table += "<th align=''>" + totalGaji + "</th>";
+  table += "</tr>";
+  table += "</tfoot>";
+
+  table += "</table>";
+
+  document.write(profile);
+  document.write(table);
+</script>
