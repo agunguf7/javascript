@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tugas 4 Javascript | Agung Kusaeri</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+                <h6>Pembelian Barang Dengan Konversi Kurs</h6>
+            </div>
+            <div class="card-body">
+              <form action="javascript:void(0)" id="myForm">
+                <div class="form-group py-1">
+                  <label for="nama_pembeli">Nama Pembeli</label>
+                  <input type="text" class="form-control" id="nama_pembeli" />
+                </div>
+                <div class="form-group py-1">
+                  <label for="nama_barang">Nama Barang</label>
+                  <input type="text" class="form-control" id="nama_barang" />
+                </div>
+                <div class="form-group py-1">
+                  <label for="harga_barang">Harga Barang</label>
+                  <input type="number" class="form-control" id="harga_barang" />
+                </div>
+                <div class="form-group py-1">
+                  <label for="jumlah_barang">Jumlah Barang</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="jumlah_barang"
+                  />
+                </div>
+                <div class="form-group py-1">
+                  <label for="valas">Valuta Asing</label>
+                  <select name="valas" class="form-control" id="valas">
+                    <option value="">-- Pilih Valas --</option>
+                    <option value="14917">-- USD --</option>
+                    <option value="10590">-- SGD --</option>
+                    <option value="14918">-- EUR --</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+                <h6>Informasi Pembelian</h6>
+            </div>
+            <div class="card-body">
+              <ul class="list-inline">
+                <li class="d-flex justify-content-between">
+                  <span>Nama Pembeli</span>
+                  <span id="d-nama_pembeli">-</span>
+                </li>
+                <hr />
+                <li class="d-flex justify-content-between">
+                  <span>Nama Barang</span>
+                  <span id="d-nama_barang">-</span>
+                </li>
+                <hr />
+                <li class="d-flex justify-content-between">
+                  <span>Harga Barang</span>
+                  <span id="d-harga_barang">-</span>
+                </li>
+                <hr />
+                <li class="d-flex justify-content-between">
+                  <span>Jumlah Barang</span>
+                  <span id="d-jumlah_barang">-</span>
+                </li>
+                <hr />
+                <li class="d-flex justify-content-between">
+                  <span>Valuta Asing</span>
+                  <span id="d-valas">-</span>
+                </li>
+                <hr />
+                <li class="d-flex justify-content-between">
+                  <span>Total Bayar</span>
+                  <span id="d-total_bayar">-</span>
+                </li>
+                <hr />
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      /*
+    Hitunglah pembelian barang berdasarkan kurs valas yang dipilih.
+    (Event Handle Js nya: onchange ketika pilih valas)
+    Hasilnya ditempatkan pada paragraf yang ber-id-kan isi
+    */
+
+      // inputan
+      let nama_pembeli = document.getElementById("nama_pembeli");
+      let nama_barang = document.getElementById("nama_barang");
+      let harga_barang = document.getElementById("harga_barang");
+      let jumlah_barang = document.getElementById("jumlah_barang");
+      let valas = document.getElementById("valas");
+
+      // display keterangan
+      let d_nama_pembeli = document.getElementById("d-nama_pembeli");
+      let d_nama_barang = document.getElementById("d-nama_barang");
+      let d_harga_barang = document.getElementById("d-harga_barang");
+      let d_jumlah_barang = document.getElementById("d-jumlah_barang");
+      let d_valas = document.getElementById("d-valas");
+      let d_total_bayar = document.getElementById("d-total_bayar");
+      // ketika ketik nama pembeli
+      nama_pembeli.addEventListener("keyup", function () {
+        d_nama_pembeli.innerHTML = this.value;
+      });
+
+      // ketika ketik nama barang
+      nama_barang.addEventListener("keyup", function () {
+        d_nama_barang.innerHTML = this.value;
+      });
+
+      // ketika ketik harga barang
+      harga_barang.addEventListener("keyup", function () {
+        d_harga_barang.innerHTML = this.value;
+      });
+
+      // ketika ketik jumlah barang
+      jumlah_barang.addEventListener("keyup", function () {
+        d_jumlah_barang.innerHTML = this.value;
+      });
+
+      // ketika valas di pilih
+      valas.addEventListener("change", function () {
+        d_valas.innerHTML = this.value;
+
+        //   total bayar
+        let total_bayar = harga_barang.value * jumlah_barang.value * this.value;
+        d_total_bayar.innerHTML = total_bayar;
+      });
+    </script>
+  </body>
+</html>
