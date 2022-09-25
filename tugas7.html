@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tugas 7 Javascript - Agung Kusaeri</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h6>Daftar Hewan</h6>
+            </div>
+            <div class="card-body">
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="acc-item"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="" alt="" class="img-fluid imgModal w-100">
+          <audio controls id="audio2" class="w-100 mt-3">
+            <source src="" class="audioSrc2" type="audio/mp3">
+          </audio>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+        let jenisHewan = [
+            'Amfibi',
+            'Invertebrata',
+            'Mamalia',
+            'Reptil'
+        ];
+        let hewanAmfibi = [
+            {
+                'nama_hewan' : 'Kodok',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20210311/original/pngtree-toad-looking-up-clipart-png-image_6030453.jpg',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/41a24d90-3ce0-11ed-ba12-09cd1822a198.mp3?AWSAccessKeyId=ASIAZSJTG4QMZFXTENNX&Expires=1664203339&Signature=0aJgZKfh8sAC27yoQVS%2Fs3LF3mc%3D&response-content-disposition=attachment%3B%20filename%3D%2241a24d90-3ce0-11ed-ba12-09cd1822a198.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIAvS4nvy29RR9b5HTCBlErg2OCA2JDo1eMEEjPkQz%2BGzAiAHUYec211e8CrZpKemH6Kq9RgmfpgIZUd1fnrMA5K2yCqNAwjX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM5n9g%2Bi%2BnU4fJhTaSKuECQo1jWLNPY23yBxiGyAdtRk9GkZoVl3hlGcyFlSip3bLz2teXowEvRZIGaTdm%2Fnbi5NE0KlOPdSs1SB70e0a3rYBWUJNfMntazY7f3DICmYkOKvCXzWKuAZ45muk0%2Bfnsaj6fBO0Jl5rwoFR7NXEBPq04bG%2B7d7Ugb%2F9isVbXWYAcjuoVzNuCOKu71dXQV1ZreRa5vK4vM%2FhWDzayQxgF3MxnETOgSuFS4hJEow2EisbG5Qhnu0XDeVzTW78kAKnrxzjU1byUYejAmpklTEQTxx%2BQpS71qOb3kQlZoLxp7Sn1mFs8ii%2BK5sKBLG6E64EzLYC4bwUkpS%2BfgbKVhsiHcjZlUpwrUXasQsE5dkg02krbm2pO%2BMDqevKU52Q38Xodiqxrr9ESv3SaeL46wA93YQJqM1KnlYpga5queZBeRcJO4lVXPvNzONV3i5BnacquW3zIgreXsBc7YIx4Ew9WPEIwsMfBmQY6nwEArmi%2FEd4h1aW0CecLvcVcQGJZxORaBpxZIi2RyTE%2BC3cqEMf%2B0e8HRA4kQhR8r1I%2BqPhKYk18FDAtmtlzPWDjQtwnltF1u004dnG7in8pZUpdXCTSE6URtmYnGcx84pKni%2F6WrTMS0PmIporQuz6HJr4Jbk7LqztlhTaJxUE6lrT7rKRjvbcP%2F06BjOm%2FTqf43jb1ApCfptEH44H%2F%2F%2Bo%3D'
+            },
+            {
+                'nama_hewan' : 'Katak Sawah',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20190611/original/pngtree-the-frog-on-the-lotus-leaf-png-image_3018146.jpg',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/77c39280-3ce0-11ed-b25a-ed6719582132.mp3?AWSAccessKeyId=ASIAZSJTG4QMTDWG4WYT&Expires=1664203429&Signature=7KUyg2wEI3uXd4MsEBwagTBfHCw%3D&response-content-disposition=attachment%3B%20filename%3D%2277c39280-3ce0-11ed-b25a-ed6719582132.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIHIhhrJLoXnaRbA7E%2FkW7QSC30i7L22u4JknTvpQQKqZAiBnq0MoOZ9AHoqkRS8lTCcEfna3iVNZFhYBmeqwPHbHpyqNAwjY%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM33gSSndLdZFD99ayKuECiTHqn%2FRiLRDV5a%2B7f0rNGjPXNond%2BICOJjNJ%2BjGpLb9GmcbKHFJyxdGZB2GDluZ9NjI39Crp0YaWY4u2jlQQM0qapcxxJ1zknTIrNEyk4P34AooSWT%2FXCI9XLQ8S777ypR9QPfxIo0Po5FxXp%2BqTy28SMgMoQFK77OvI9yRVMwQRb2rMunBhHbiBxB0VEWgMa7AXiIOgbugozzvUcpfoDsV2y%2FKVsJ%2B%2Bx36NzbLRC30dDNgYVqGLDBDaq34Ri24v3Qc0d90AEb%2F4WI7aHpfZZbVfwAy1DitOJLrTaMjTwLwPuq%2Bqpfwt2STrnfimmGRTfSn1nx0UQGDXLnemUAcV6ZjRuHCZWJ4pSdm9DCos08hdRNlP%2BTJ9Ut291O0HHTmKhGFrXjUZSfxysxK5r%2FaR8H5WRfg0z86QYT65bZ1Gr2VLKaidg2c9eFtVunkR0I13OYQ2xcPs9aCU4T84ngWnt1gw6c7BmQY6nwGawUzrmoq3Eq1bXwc5Ztu9gWp6pPG9G8uWqDmlHePcZ7zZ5g5yiw1aP2SrQaFrIbmSB1PwE7KuOmfvxAGHsM1GOEtOyl%2Fyzllh7SSlSv3S2qTAzZ8MEiGFVPTcxX%2BzkX0jv9gCbV06kc61izSocpE19pbR3KelobglBjw29BHsE%2Bwt2B5NtaqWDJKpDCS3S182G7HERNyl5vFKluK0b2o%3D'
+            },
+            {
+                'nama_hewan' : 'Katak Pohon',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20190906/original/pngtree-tree-frog-illustration-png-image_4568579.jpg',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/98cd36c0-3ce0-11ed-b25a-ed6719582132.mp3?AWSAccessKeyId=ASIAZSJTG4QMTDWG4WYT&Expires=1664203485&Signature=l6ktVvNNq%2BSkd27S4dyxUbyVCA8%3D&response-content-disposition=attachment%3B%20filename%3D%2298cd36c0-3ce0-11ed-b25a-ed6719582132.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIHIhhrJLoXnaRbA7E%2FkW7QSC30i7L22u4JknTvpQQKqZAiBnq0MoOZ9AHoqkRS8lTCcEfna3iVNZFhYBmeqwPHbHpyqNAwjY%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM33gSSndLdZFD99ayKuECiTHqn%2FRiLRDV5a%2B7f0rNGjPXNond%2BICOJjNJ%2BjGpLb9GmcbKHFJyxdGZB2GDluZ9NjI39Crp0YaWY4u2jlQQM0qapcxxJ1zknTIrNEyk4P34AooSWT%2FXCI9XLQ8S777ypR9QPfxIo0Po5FxXp%2BqTy28SMgMoQFK77OvI9yRVMwQRb2rMunBhHbiBxB0VEWgMa7AXiIOgbugozzvUcpfoDsV2y%2FKVsJ%2B%2Bx36NzbLRC30dDNgYVqGLDBDaq34Ri24v3Qc0d90AEb%2F4WI7aHpfZZbVfwAy1DitOJLrTaMjTwLwPuq%2Bqpfwt2STrnfimmGRTfSn1nx0UQGDXLnemUAcV6ZjRuHCZWJ4pSdm9DCos08hdRNlP%2BTJ9Ut291O0HHTmKhGFrXjUZSfxysxK5r%2FaR8H5WRfg0z86QYT65bZ1Gr2VLKaidg2c9eFtVunkR0I13OYQ2xcPs9aCU4T84ngWnt1gw6c7BmQY6nwGawUzrmoq3Eq1bXwc5Ztu9gWp6pPG9G8uWqDmlHePcZ7zZ5g5yiw1aP2SrQaFrIbmSB1PwE7KuOmfvxAGHsM1GOEtOyl%2Fyzllh7SSlSv3S2qTAzZ8MEiGFVPTcxX%2BzkX0jv9gCbV06kc61izSocpE19pbR3KelobglBjw29BHsE%2Bwt2B5NtaqWDJKpDCS3S182G7HERNyl5vFKluK0b2o%3D'
+            },
+            {
+                'nama_hewan' : 'Salamander',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20220728/original/pngtree-cheerful-axolotl-cartoon-image-png-image_8421026.png',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/a9a495b0-3ce0-11ed-ba12-09cd1822a198.mp3?AWSAccessKeyId=ASIAZSJTG4QMZFXTENNX&Expires=1664203513&Signature=mrxzMj1w6LxpplN2vlpMBcWc2CM%3D&response-content-disposition=attachment%3B%20filename%3D%22a9a495b0-3ce0-11ed-ba12-09cd1822a198.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIAvS4nvy29RR9b5HTCBlErg2OCA2JDo1eMEEjPkQz%2BGzAiAHUYec211e8CrZpKemH6Kq9RgmfpgIZUd1fnrMA5K2yCqNAwjX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM5n9g%2Bi%2BnU4fJhTaSKuECQo1jWLNPY23yBxiGyAdtRk9GkZoVl3hlGcyFlSip3bLz2teXowEvRZIGaTdm%2Fnbi5NE0KlOPdSs1SB70e0a3rYBWUJNfMntazY7f3DICmYkOKvCXzWKuAZ45muk0%2Bfnsaj6fBO0Jl5rwoFR7NXEBPq04bG%2B7d7Ugb%2F9isVbXWYAcjuoVzNuCOKu71dXQV1ZreRa5vK4vM%2FhWDzayQxgF3MxnETOgSuFS4hJEow2EisbG5Qhnu0XDeVzTW78kAKnrxzjU1byUYejAmpklTEQTxx%2BQpS71qOb3kQlZoLxp7Sn1mFs8ii%2BK5sKBLG6E64EzLYC4bwUkpS%2BfgbKVhsiHcjZlUpwrUXasQsE5dkg02krbm2pO%2BMDqevKU52Q38Xodiqxrr9ESv3SaeL46wA93YQJqM1KnlYpga5queZBeRcJO4lVXPvNzONV3i5BnacquW3zIgreXsBc7YIx4Ew9WPEIwsMfBmQY6nwEArmi%2FEd4h1aW0CecLvcVcQGJZxORaBpxZIi2RyTE%2BC3cqEMf%2B0e8HRA4kQhR8r1I%2BqPhKYk18FDAtmtlzPWDjQtwnltF1u004dnG7in8pZUpdXCTSE6URtmYnGcx84pKni%2F6WrTMS0PmIporQuz6HJr4Jbk7LqztlhTaJxUE6lrT7rKRjvbcP%2F06BjOm%2FTqf43jb1ApCfptEH44H%2F%2F%2Bo%3D'
+            }
+        ];
+
+        let hewanMamalia = [
+            {
+                'nama_hewan' : 'Tupai',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20220429/original/pngtree-squirrel-collecting-acorns-in-a-basket-png-image_7579786.png',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/d2b91840-3ce0-11ed-ba12-09cd1822a198.mp3?AWSAccessKeyId=ASIAZSJTG4QMZFXTENNX&Expires=1664203582&Signature=Mmlcs8495Nb5mkIgEIXYCFUZLac%3D&response-content-disposition=attachment%3B%20filename%3D%22d2b91840-3ce0-11ed-ba12-09cd1822a198.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIAvS4nvy29RR9b5HTCBlErg2OCA2JDo1eMEEjPkQz%2BGzAiAHUYec211e8CrZpKemH6Kq9RgmfpgIZUd1fnrMA5K2yCqNAwjX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM5n9g%2Bi%2BnU4fJhTaSKuECQo1jWLNPY23yBxiGyAdtRk9GkZoVl3hlGcyFlSip3bLz2teXowEvRZIGaTdm%2Fnbi5NE0KlOPdSs1SB70e0a3rYBWUJNfMntazY7f3DICmYkOKvCXzWKuAZ45muk0%2Bfnsaj6fBO0Jl5rwoFR7NXEBPq04bG%2B7d7Ugb%2F9isVbXWYAcjuoVzNuCOKu71dXQV1ZreRa5vK4vM%2FhWDzayQxgF3MxnETOgSuFS4hJEow2EisbG5Qhnu0XDeVzTW78kAKnrxzjU1byUYejAmpklTEQTxx%2BQpS71qOb3kQlZoLxp7Sn1mFs8ii%2BK5sKBLG6E64EzLYC4bwUkpS%2BfgbKVhsiHcjZlUpwrUXasQsE5dkg02krbm2pO%2BMDqevKU52Q38Xodiqxrr9ESv3SaeL46wA93YQJqM1KnlYpga5queZBeRcJO4lVXPvNzONV3i5BnacquW3zIgreXsBc7YIx4Ew9WPEIwsMfBmQY6nwEArmi%2FEd4h1aW0CecLvcVcQGJZxORaBpxZIi2RyTE%2BC3cqEMf%2B0e8HRA4kQhR8r1I%2BqPhKYk18FDAtmtlzPWDjQtwnltF1u004dnG7in8pZUpdXCTSE6URtmYnGcx84pKni%2F6WrTMS0PmIporQuz6HJr4Jbk7LqztlhTaJxUE6lrT7rKRjvbcP%2F06BjOm%2FTqf43jb1ApCfptEH44H%2F%2F%2Bo%3D'
+            },
+            {
+                'nama_hewan' : 'Gajah',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20220823/original/pngtree-cute-handdraw-cartoon-elephant-free-png-transparent-background-and-vector-png-image_8466382.png',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/dd624820-3ce0-11ed-b25a-ed6719582132.mp3?AWSAccessKeyId=ASIAZSJTG4QMTDWG4WYT&Expires=1664203600&Signature=1iKR9tnTYUhbHa7DDadeOHjaOLs%3D&response-content-disposition=attachment%3B%20filename%3D%22dd624820-3ce0-11ed-b25a-ed6719582132.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIHIhhrJLoXnaRbA7E%2FkW7QSC30i7L22u4JknTvpQQKqZAiBnq0MoOZ9AHoqkRS8lTCcEfna3iVNZFhYBmeqwPHbHpyqNAwjY%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM33gSSndLdZFD99ayKuECiTHqn%2FRiLRDV5a%2B7f0rNGjPXNond%2BICOJjNJ%2BjGpLb9GmcbKHFJyxdGZB2GDluZ9NjI39Crp0YaWY4u2jlQQM0qapcxxJ1zknTIrNEyk4P34AooSWT%2FXCI9XLQ8S777ypR9QPfxIo0Po5FxXp%2BqTy28SMgMoQFK77OvI9yRVMwQRb2rMunBhHbiBxB0VEWgMa7AXiIOgbugozzvUcpfoDsV2y%2FKVsJ%2B%2Bx36NzbLRC30dDNgYVqGLDBDaq34Ri24v3Qc0d90AEb%2F4WI7aHpfZZbVfwAy1DitOJLrTaMjTwLwPuq%2Bqpfwt2STrnfimmGRTfSn1nx0UQGDXLnemUAcV6ZjRuHCZWJ4pSdm9DCos08hdRNlP%2BTJ9Ut291O0HHTmKhGFrXjUZSfxysxK5r%2FaR8H5WRfg0z86QYT65bZ1Gr2VLKaidg2c9eFtVunkR0I13OYQ2xcPs9aCU4T84ngWnt1gw6c7BmQY6nwGawUzrmoq3Eq1bXwc5Ztu9gWp6pPG9G8uWqDmlHePcZ7zZ5g5yiw1aP2SrQaFrIbmSB1PwE7KuOmfvxAGHsM1GOEtOyl%2Fyzllh7SSlSv3S2qTAzZ8MEiGFVPTcxX%2BzkX0jv9gCbV06kc61izSocpE19pbR3KelobglBjw29BHsE%2Bwt2B5NtaqWDJKpDCS3S182G7HERNyl5vFKluK0b2o%3D'
+            },
+            {
+                'nama_hewan' : 'Kera',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20220823/original/pngtree-long-arm-monkey-sitting-and-smiling-looking-ahead-png-image_8476851.png',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/ef38eea0-3ce0-11ed-b25a-ed6719582132.mp3?AWSAccessKeyId=ASIAZSJTG4QMTDWG4WYT&Expires=1664203630&Signature=oG5Cls%2BHi7mQoNDebOh9b%2FolFV0%3D&response-content-disposition=attachment%3B%20filename%3D%22ef38eea0-3ce0-11ed-b25a-ed6719582132.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIHIhhrJLoXnaRbA7E%2FkW7QSC30i7L22u4JknTvpQQKqZAiBnq0MoOZ9AHoqkRS8lTCcEfna3iVNZFhYBmeqwPHbHpyqNAwjY%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM33gSSndLdZFD99ayKuECiTHqn%2FRiLRDV5a%2B7f0rNGjPXNond%2BICOJjNJ%2BjGpLb9GmcbKHFJyxdGZB2GDluZ9NjI39Crp0YaWY4u2jlQQM0qapcxxJ1zknTIrNEyk4P34AooSWT%2FXCI9XLQ8S777ypR9QPfxIo0Po5FxXp%2BqTy28SMgMoQFK77OvI9yRVMwQRb2rMunBhHbiBxB0VEWgMa7AXiIOgbugozzvUcpfoDsV2y%2FKVsJ%2B%2Bx36NzbLRC30dDNgYVqGLDBDaq34Ri24v3Qc0d90AEb%2F4WI7aHpfZZbVfwAy1DitOJLrTaMjTwLwPuq%2Bqpfwt2STrnfimmGRTfSn1nx0UQGDXLnemUAcV6ZjRuHCZWJ4pSdm9DCos08hdRNlP%2BTJ9Ut291O0HHTmKhGFrXjUZSfxysxK5r%2FaR8H5WRfg0z86QYT65bZ1Gr2VLKaidg2c9eFtVunkR0I13OYQ2xcPs9aCU4T84ngWnt1gw6c7BmQY6nwGawUzrmoq3Eq1bXwc5Ztu9gWp6pPG9G8uWqDmlHePcZ7zZ5g5yiw1aP2SrQaFrIbmSB1PwE7KuOmfvxAGHsM1GOEtOyl%2Fyzllh7SSlSv3S2qTAzZ8MEiGFVPTcxX%2BzkX0jv9gCbV06kc61izSocpE19pbR3KelobglBjw29BHsE%2Bwt2B5NtaqWDJKpDCS3S182G7HERNyl5vFKluK0b2o%3D'
+            },
+            {
+                'nama_hewan' : 'Kelelawar',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20220511/original/pngtree-vector-illustration-bat-png-image_7715203.png',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/fc1a3430-3ce0-11ed-b25a-ed6719582132.mp3?AWSAccessKeyId=ASIAZSJTG4QMTDWG4WYT&Expires=1664203651&Signature=oom68Kpag8TonVJzlrbthxISung%3D&response-content-disposition=attachment%3B%20filename%3D%22fc1a3430-3ce0-11ed-b25a-ed6719582132.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIHIhhrJLoXnaRbA7E%2FkW7QSC30i7L22u4JknTvpQQKqZAiBnq0MoOZ9AHoqkRS8lTCcEfna3iVNZFhYBmeqwPHbHpyqNAwjY%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM33gSSndLdZFD99ayKuECiTHqn%2FRiLRDV5a%2B7f0rNGjPXNond%2BICOJjNJ%2BjGpLb9GmcbKHFJyxdGZB2GDluZ9NjI39Crp0YaWY4u2jlQQM0qapcxxJ1zknTIrNEyk4P34AooSWT%2FXCI9XLQ8S777ypR9QPfxIo0Po5FxXp%2BqTy28SMgMoQFK77OvI9yRVMwQRb2rMunBhHbiBxB0VEWgMa7AXiIOgbugozzvUcpfoDsV2y%2FKVsJ%2B%2Bx36NzbLRC30dDNgYVqGLDBDaq34Ri24v3Qc0d90AEb%2F4WI7aHpfZZbVfwAy1DitOJLrTaMjTwLwPuq%2Bqpfwt2STrnfimmGRTfSn1nx0UQGDXLnemUAcV6ZjRuHCZWJ4pSdm9DCos08hdRNlP%2BTJ9Ut291O0HHTmKhGFrXjUZSfxysxK5r%2FaR8H5WRfg0z86QYT65bZ1Gr2VLKaidg2c9eFtVunkR0I13OYQ2xcPs9aCU4T84ngWnt1gw6c7BmQY6nwGawUzrmoq3Eq1bXwc5Ztu9gWp6pPG9G8uWqDmlHePcZ7zZ5g5yiw1aP2SrQaFrIbmSB1PwE7KuOmfvxAGHsM1GOEtOyl%2Fyzllh7SSlSv3S2qTAzZ8MEiGFVPTcxX%2BzkX0jv9gCbV06kc61izSocpE19pbR3KelobglBjw29BHsE%2Bwt2B5NtaqWDJKpDCS3S182G7HERNyl5vFKluK0b2o%3D'
+            }
+        ];
+
+        let hewanReptil = [
+            {
+                'nama_hewan' : 'Buaya',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20210912/original/pngtree-cute-crocodile-with-gift-box-png-image_6716796.jpg',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/0cf9a970-3ce1-11ed-b25a-ed6719582132.mp3?AWSAccessKeyId=ASIAZSJTG4QMTDWG4WYT&Expires=1664203680&Signature=BBMOq6AAIEhYjKQp9pJ9Fh4VuCk%3D&response-content-disposition=attachment%3B%20filename%3D%220cf9a970-3ce1-11ed-b25a-ed6719582132.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIHIhhrJLoXnaRbA7E%2FkW7QSC30i7L22u4JknTvpQQKqZAiBnq0MoOZ9AHoqkRS8lTCcEfna3iVNZFhYBmeqwPHbHpyqNAwjY%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM33gSSndLdZFD99ayKuECiTHqn%2FRiLRDV5a%2B7f0rNGjPXNond%2BICOJjNJ%2BjGpLb9GmcbKHFJyxdGZB2GDluZ9NjI39Crp0YaWY4u2jlQQM0qapcxxJ1zknTIrNEyk4P34AooSWT%2FXCI9XLQ8S777ypR9QPfxIo0Po5FxXp%2BqTy28SMgMoQFK77OvI9yRVMwQRb2rMunBhHbiBxB0VEWgMa7AXiIOgbugozzvUcpfoDsV2y%2FKVsJ%2B%2Bx36NzbLRC30dDNgYVqGLDBDaq34Ri24v3Qc0d90AEb%2F4WI7aHpfZZbVfwAy1DitOJLrTaMjTwLwPuq%2Bqpfwt2STrnfimmGRTfSn1nx0UQGDXLnemUAcV6ZjRuHCZWJ4pSdm9DCos08hdRNlP%2BTJ9Ut291O0HHTmKhGFrXjUZSfxysxK5r%2FaR8H5WRfg0z86QYT65bZ1Gr2VLKaidg2c9eFtVunkR0I13OYQ2xcPs9aCU4T84ngWnt1gw6c7BmQY6nwGawUzrmoq3Eq1bXwc5Ztu9gWp6pPG9G8uWqDmlHePcZ7zZ5g5yiw1aP2SrQaFrIbmSB1PwE7KuOmfvxAGHsM1GOEtOyl%2Fyzllh7SSlSv3S2qTAzZ8MEiGFVPTcxX%2BzkX0jv9gCbV06kc61izSocpE19pbR3KelobglBjw29BHsE%2Bwt2B5NtaqWDJKpDCS3S182G7HERNyl5vFKluK0b2o%3D'
+            },
+            {
+                'nama_hewan' : 'Komodo',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20220910/original/pngtree-komodo-with-indonesian-flag-png-image_8531751.png',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/1ea918e0-3ce1-11ed-b25a-ed6719582132.mp3?AWSAccessKeyId=ASIAZSJTG4QMTDWG4WYT&Expires=1664203709&Signature=DqeUsWckaV5kVkPAuyNsYX425GQ%3D&response-content-disposition=attachment%3B%20filename%3D%221ea918e0-3ce1-11ed-b25a-ed6719582132.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIHIhhrJLoXnaRbA7E%2FkW7QSC30i7L22u4JknTvpQQKqZAiBnq0MoOZ9AHoqkRS8lTCcEfna3iVNZFhYBmeqwPHbHpyqNAwjY%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM33gSSndLdZFD99ayKuECiTHqn%2FRiLRDV5a%2B7f0rNGjPXNond%2BICOJjNJ%2BjGpLb9GmcbKHFJyxdGZB2GDluZ9NjI39Crp0YaWY4u2jlQQM0qapcxxJ1zknTIrNEyk4P34AooSWT%2FXCI9XLQ8S777ypR9QPfxIo0Po5FxXp%2BqTy28SMgMoQFK77OvI9yRVMwQRb2rMunBhHbiBxB0VEWgMa7AXiIOgbugozzvUcpfoDsV2y%2FKVsJ%2B%2Bx36NzbLRC30dDNgYVqGLDBDaq34Ri24v3Qc0d90AEb%2F4WI7aHpfZZbVfwAy1DitOJLrTaMjTwLwPuq%2Bqpfwt2STrnfimmGRTfSn1nx0UQGDXLnemUAcV6ZjRuHCZWJ4pSdm9DCos08hdRNlP%2BTJ9Ut291O0HHTmKhGFrXjUZSfxysxK5r%2FaR8H5WRfg0z86QYT65bZ1Gr2VLKaidg2c9eFtVunkR0I13OYQ2xcPs9aCU4T84ngWnt1gw6c7BmQY6nwGawUzrmoq3Eq1bXwc5Ztu9gWp6pPG9G8uWqDmlHePcZ7zZ5g5yiw1aP2SrQaFrIbmSB1PwE7KuOmfvxAGHsM1GOEtOyl%2Fyzllh7SSlSv3S2qTAzZ8MEiGFVPTcxX%2BzkX0jv9gCbV06kc61izSocpE19pbR3KelobglBjw29BHsE%2Bwt2B5NtaqWDJKpDCS3S182G7HERNyl5vFKluK0b2o%3D'
+            },
+            {
+                'nama_hewan' : 'Ular',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20201209/original/pngtree-flat-cartoon-alphabet-animal-cute-snake-letter-s-for-kids-isolated-png-image_5656104.jpg',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/2a955010-3ce1-11ed-af8b-3bfdd8546cbd.mp3?AWSAccessKeyId=ASIAZSJTG4QM3CE3NRF6&Expires=1664203729&Signature=hbKWAfQgdVi6vWK4kcsmspWzlX4%3D&response-content-disposition=attachment%3B%20filename%3D%222a955010-3ce1-11ed-af8b-3bfdd8546cbd.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC0aCXVzLWVhc3QtMSJHMEUCIQDHHY0FqDJmG8RkDv6xvWkcIJQ6OJoSRwtiGsg2XPAQ8AIge%2Bj1Q1Ye6HaWRxsdiz7qM26F1kcKDL0tHwa0XH0dyIEqjQMI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2NTc3NzQyNzM1NjEiDEKGWJTCeGlOItujmSrhAgVmdF2R8Erat0y6irULiRo1v3xZtjGHBOV94uvpL8prgz6rYZbHebzqgoIVSk%2FuOn8o6GQep92NmuJbZEjc52tiaakP2P%2Btgp%2Fj9H3Fb9qpjoiWG2mGePMqmrFAeCDYcTXostd12aXUiPp8eDJS17sruJu3vp6L6LAHRxk6Y5IWWx8vFB94s9RtI1u6pvWfX3NzdJyBUoPXOHJNRI9k4Z%2BlwVKMNuPv8uoq%2B6YB5BVegABGxNl%2F0uWugFfqvkCPadoZwvFnm5xVa4WKn8QzfTd6D0OHfNPDUkE0EzwGnh6d8kdxN7mE4peXRpd7tovULmWP%2Bf6Twv%2FU03GtvnLCghEZy2zN36b6RAc84x5x0PqNm5oMtiPTv1qnTnFD7%2FrgRipSJmiqYAP7VDQe9TUc8I9eXYCtdSJKqaOYP3mR%2Bx9w4pZH2AvK8ZWqmjWPhQ88QlqWY%2Bz5lnLuOQ2GwLBURxToMMKdwZkGOp4BCxjNWdjI6zxuTLlZYAfJlNLDjV%2FzXNr2GDXtKMpkgCId9mFoZrY6p3ejQcnLJS9oRJwgyf39OQJOhdoKKs0TuR%2BZf1ACFbmX9B2nXzOwjIMXgcolbbdJR3117NDlRpdxpJ9hakSluZTyK6NmjLUjYILLEDS2hiuMKvAtCjLlN7dyBZYLVa8qN0%2BqrJ9TWhF0SNa4DUEau2bc9I7icSo%3D'
+            },
+            {
+                'nama_hewan' : 'Tuatara',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20220621/original/pngtree-retro-black-and-white-style-illustration-of-a-northern-tuatara-png-image_8150743.png',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/3b570420-3ce1-11ed-b25a-ed6719582132.mp3?AWSAccessKeyId=ASIAZSJTG4QMTDWG4WYT&Expires=1664203758&Signature=1Sk9%2BepsC9%2BD5OGJdFEzwFdalMY%3D&response-content-disposition=attachment%3B%20filename%3D%223b570420-3ce1-11ed-b25a-ed6719582132.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIHIhhrJLoXnaRbA7E%2FkW7QSC30i7L22u4JknTvpQQKqZAiBnq0MoOZ9AHoqkRS8lTCcEfna3iVNZFhYBmeqwPHbHpyqNAwjY%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM33gSSndLdZFD99ayKuECiTHqn%2FRiLRDV5a%2B7f0rNGjPXNond%2BICOJjNJ%2BjGpLb9GmcbKHFJyxdGZB2GDluZ9NjI39Crp0YaWY4u2jlQQM0qapcxxJ1zknTIrNEyk4P34AooSWT%2FXCI9XLQ8S777ypR9QPfxIo0Po5FxXp%2BqTy28SMgMoQFK77OvI9yRVMwQRb2rMunBhHbiBxB0VEWgMa7AXiIOgbugozzvUcpfoDsV2y%2FKVsJ%2B%2Bx36NzbLRC30dDNgYVqGLDBDaq34Ri24v3Qc0d90AEb%2F4WI7aHpfZZbVfwAy1DitOJLrTaMjTwLwPuq%2Bqpfwt2STrnfimmGRTfSn1nx0UQGDXLnemUAcV6ZjRuHCZWJ4pSdm9DCos08hdRNlP%2BTJ9Ut291O0HHTmKhGFrXjUZSfxysxK5r%2FaR8H5WRfg0z86QYT65bZ1Gr2VLKaidg2c9eFtVunkR0I13OYQ2xcPs9aCU4T84ngWnt1gw6c7BmQY6nwGawUzrmoq3Eq1bXwc5Ztu9gWp6pPG9G8uWqDmlHePcZ7zZ5g5yiw1aP2SrQaFrIbmSB1PwE7KuOmfvxAGHsM1GOEtOyl%2Fyzllh7SSlSv3S2qTAzZ8MEiGFVPTcxX%2BzkX0jv9gCbV06kc61izSocpE19pbR3KelobglBjw29BHsE%2Bwt2B5NtaqWDJKpDCS3S182G7HERNyl5vFKluK0b2o%3D'
+            }
+        ];
+
+        let hewanInvertebrata = [
+            {
+                'nama_hewan' : 'Kupu-kupu',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20190920/original/pngtree-black-blue-butterfly-cartoon-illustration-png-image_4614678.jpg',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/4a5c3b20-3ce1-11ed-af8b-3bfdd8546cbd.mp3?AWSAccessKeyId=ASIAZSJTG4QM3CE3NRF6&Expires=1664203783&Signature=lU06vx9jL78YWsi3wuFg%2BXCzqbI%3D&response-content-disposition=attachment%3B%20filename%3D%224a5c3b20-3ce1-11ed-af8b-3bfdd8546cbd.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC0aCXVzLWVhc3QtMSJHMEUCIQDHHY0FqDJmG8RkDv6xvWkcIJQ6OJoSRwtiGsg2XPAQ8AIge%2Bj1Q1Ye6HaWRxsdiz7qM26F1kcKDL0tHwa0XH0dyIEqjQMI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2NTc3NzQyNzM1NjEiDEKGWJTCeGlOItujmSrhAgVmdF2R8Erat0y6irULiRo1v3xZtjGHBOV94uvpL8prgz6rYZbHebzqgoIVSk%2FuOn8o6GQep92NmuJbZEjc52tiaakP2P%2Btgp%2Fj9H3Fb9qpjoiWG2mGePMqmrFAeCDYcTXostd12aXUiPp8eDJS17sruJu3vp6L6LAHRxk6Y5IWWx8vFB94s9RtI1u6pvWfX3NzdJyBUoPXOHJNRI9k4Z%2BlwVKMNuPv8uoq%2B6YB5BVegABGxNl%2F0uWugFfqvkCPadoZwvFnm5xVa4WKn8QzfTd6D0OHfNPDUkE0EzwGnh6d8kdxN7mE4peXRpd7tovULmWP%2Bf6Twv%2FU03GtvnLCghEZy2zN36b6RAc84x5x0PqNm5oMtiPTv1qnTnFD7%2FrgRipSJmiqYAP7VDQe9TUc8I9eXYCtdSJKqaOYP3mR%2Bx9w4pZH2AvK8ZWqmjWPhQ88QlqWY%2Bz5lnLuOQ2GwLBURxToMMKdwZkGOp4BCxjNWdjI6zxuTLlZYAfJlNLDjV%2FzXNr2GDXtKMpkgCId9mFoZrY6p3ejQcnLJS9oRJwgyf39OQJOhdoKKs0TuR%2BZf1ACFbmX9B2nXzOwjIMXgcolbbdJR3117NDlRpdxpJ9hakSluZTyK6NmjLUjYILLEDS2hiuMKvAtCjLlN7dyBZYLVa8qN0%2BqrJ9TWhF0SNa4DUEau2bc9I7icSo%3D'
+            },
+            {
+                'nama_hewan' : 'Semut',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20200701/original/pngtree-cute-ant-cartoon-illustration-png-image_5358274.jpg',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/555bef70-3ce1-11ed-af8b-3bfdd8546cbd.mp3?AWSAccessKeyId=ASIAZSJTG4QM3CE3NRF6&Expires=1664203801&Signature=MesRvQV4%2B6TYOidrgjR4egNWxMc%3D&response-content-disposition=attachment%3B%20filename%3D%22555bef70-3ce1-11ed-af8b-3bfdd8546cbd.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC0aCXVzLWVhc3QtMSJHMEUCIQDHHY0FqDJmG8RkDv6xvWkcIJQ6OJoSRwtiGsg2XPAQ8AIge%2Bj1Q1Ye6HaWRxsdiz7qM26F1kcKDL0tHwa0XH0dyIEqjQMI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2NTc3NzQyNzM1NjEiDEKGWJTCeGlOItujmSrhAgVmdF2R8Erat0y6irULiRo1v3xZtjGHBOV94uvpL8prgz6rYZbHebzqgoIVSk%2FuOn8o6GQep92NmuJbZEjc52tiaakP2P%2Btgp%2Fj9H3Fb9qpjoiWG2mGePMqmrFAeCDYcTXostd12aXUiPp8eDJS17sruJu3vp6L6LAHRxk6Y5IWWx8vFB94s9RtI1u6pvWfX3NzdJyBUoPXOHJNRI9k4Z%2BlwVKMNuPv8uoq%2B6YB5BVegABGxNl%2F0uWugFfqvkCPadoZwvFnm5xVa4WKn8QzfTd6D0OHfNPDUkE0EzwGnh6d8kdxN7mE4peXRpd7tovULmWP%2Bf6Twv%2FU03GtvnLCghEZy2zN36b6RAc84x5x0PqNm5oMtiPTv1qnTnFD7%2FrgRipSJmiqYAP7VDQe9TUc8I9eXYCtdSJKqaOYP3mR%2Bx9w4pZH2AvK8ZWqmjWPhQ88QlqWY%2Bz5lnLuOQ2GwLBURxToMMKdwZkGOp4BCxjNWdjI6zxuTLlZYAfJlNLDjV%2FzXNr2GDXtKMpkgCId9mFoZrY6p3ejQcnLJS9oRJwgyf39OQJOhdoKKs0TuR%2BZf1ACFbmX9B2nXzOwjIMXgcolbbdJR3117NDlRpdxpJ9hakSluZTyK6NmjLUjYILLEDS2hiuMKvAtCjLlN7dyBZYLVa8qN0%2BqrJ9TWhF0SNa4DUEau2bc9I7icSo%3D'
+            },
+            {
+                'nama_hewan' : 'Lebah',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20220910/original/pngtree-premium-vector-l-cool-bee-with-amazing-design-logo-mascot-royalty-png-image_8528194.png',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/62592170-3ce1-11ed-b25a-ed6719582132.mp3?AWSAccessKeyId=ASIAZSJTG4QMTDWG4WYT&Expires=1664203823&Signature=vy24Z45bjqjq9oNv2jcn3RXhMb0%3D&response-content-disposition=attachment%3B%20filename%3D%2262592170-3ce1-11ed-b25a-ed6719582132.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC8aCXVzLWVhc3QtMSJGMEQCIHIhhrJLoXnaRbA7E%2FkW7QSC30i7L22u4JknTvpQQKqZAiBnq0MoOZ9AHoqkRS8lTCcEfna3iVNZFhYBmeqwPHbHpyqNAwjY%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDY1Nzc3NDI3MzU2MSIM33gSSndLdZFD99ayKuECiTHqn%2FRiLRDV5a%2B7f0rNGjPXNond%2BICOJjNJ%2BjGpLb9GmcbKHFJyxdGZB2GDluZ9NjI39Crp0YaWY4u2jlQQM0qapcxxJ1zknTIrNEyk4P34AooSWT%2FXCI9XLQ8S777ypR9QPfxIo0Po5FxXp%2BqTy28SMgMoQFK77OvI9yRVMwQRb2rMunBhHbiBxB0VEWgMa7AXiIOgbugozzvUcpfoDsV2y%2FKVsJ%2B%2Bx36NzbLRC30dDNgYVqGLDBDaq34Ri24v3Qc0d90AEb%2F4WI7aHpfZZbVfwAy1DitOJLrTaMjTwLwPuq%2Bqpfwt2STrnfimmGRTfSn1nx0UQGDXLnemUAcV6ZjRuHCZWJ4pSdm9DCos08hdRNlP%2BTJ9Ut291O0HHTmKhGFrXjUZSfxysxK5r%2FaR8H5WRfg0z86QYT65bZ1Gr2VLKaidg2c9eFtVunkR0I13OYQ2xcPs9aCU4T84ngWnt1gw6c7BmQY6nwGawUzrmoq3Eq1bXwc5Ztu9gWp6pPG9G8uWqDmlHePcZ7zZ5g5yiw1aP2SrQaFrIbmSB1PwE7KuOmfvxAGHsM1GOEtOyl%2Fyzllh7SSlSv3S2qTAzZ8MEiGFVPTcxX%2BzkX0jv9gCbV06kc61izSocpE19pbR3KelobglBjw29BHsE%2Bwt2B5NtaqWDJKpDCS3S182G7HERNyl5vFKluK0b2o%3D'
+            },
+            {
+                'nama_hewan' : 'Ubur-ubur',
+                'gambar' : 'https://png.pngtree.com/png-clipart/20200701/original/pngtree-cute-jellyfish-cartoon-illustration-png-image_5358284.jpg',
+                'suara': 'https://s3.amazonaws.com/text-to-speech.wideo.co/6f358500-3ce1-11ed-af8b-3bfdd8546cbd.mp3?AWSAccessKeyId=ASIAZSJTG4QM3CE3NRF6&Expires=1664203845&Signature=iKNRPy8vrC%2B8hELUhVpZxgMUSnc%3D&response-content-disposition=attachment%3B%20filename%3D%226f358500-3ce1-11ed-af8b-3bfdd8546cbd.mp3%22&x-amz-security-token=IQoJb3JpZ2luX2VjEC0aCXVzLWVhc3QtMSJHMEUCIQDHHY0FqDJmG8RkDv6xvWkcIJQ6OJoSRwtiGsg2XPAQ8AIge%2Bj1Q1Ye6HaWRxsdiz7qM26F1kcKDL0tHwa0XH0dyIEqjQMI1v%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2NTc3NzQyNzM1NjEiDEKGWJTCeGlOItujmSrhAgVmdF2R8Erat0y6irULiRo1v3xZtjGHBOV94uvpL8prgz6rYZbHebzqgoIVSk%2FuOn8o6GQep92NmuJbZEjc52tiaakP2P%2Btgp%2Fj9H3Fb9qpjoiWG2mGePMqmrFAeCDYcTXostd12aXUiPp8eDJS17sruJu3vp6L6LAHRxk6Y5IWWx8vFB94s9RtI1u6pvWfX3NzdJyBUoPXOHJNRI9k4Z%2BlwVKMNuPv8uoq%2B6YB5BVegABGxNl%2F0uWugFfqvkCPadoZwvFnm5xVa4WKn8QzfTd6D0OHfNPDUkE0EzwGnh6d8kdxN7mE4peXRpd7tovULmWP%2Bf6Twv%2FU03GtvnLCghEZy2zN36b6RAc84x5x0PqNm5oMtiPTv1qnTnFD7%2FrgRipSJmiqYAP7VDQe9TUc8I9eXYCtdSJKqaOYP3mR%2Bx9w4pZH2AvK8ZWqmjWPhQ88QlqWY%2Bz5lnLuOQ2GwLBURxToMMKdwZkGOp4BCxjNWdjI6zxuTLlZYAfJlNLDjV%2FzXNr2GDXtKMpkgCId9mFoZrY6p3ejQcnLJS9oRJwgyf39OQJOhdoKKs0TuR%2BZf1ACFbmX9B2nXzOwjIMXgcolbbdJR3117NDlRpdxpJ9hakSluZTyK6NmjLUjYILLEDS2hiuMKvAtCjLlN7dyBZYLVa8qN0%2BqrJ9TWhF0SNa4DUEau2bc9I7icSo%3D'
+            }
+        ];
+
+        jenisHewan.forEach(jh => {
+            let xhtml = ``;
+            xhtml += `<div class="accordion-item">`
+                  xhtml += `<h2 class="accordion-header" id="flush-headingOne">`
+                    xhtml += `<button class="accordion-button btnAcc collapsed" type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-${jh}"
+                      aria-expanded="false"
+                      aria-controls="flush-${jh}" data-jenis="${jh}"
+                    >`
+                     xhtml += `<div class="jhewan">
+                        ${jh}    `
+                    xhtml += `</div>`
+                    xhtml += `</button>`
+                  xhtml += `</h2>`
+                  xhtml += `<div id="flush-${jh}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" >`
+                    xhtml += `<div class="accordion-body">`
+                        xhtml += `<div class="container">`
+                            xhtml += `<div class="row list-hewan">`
+                                let datas = [];
+                               if(jh === 'Amfibi')
+                               {
+                                datas = hewanAmfibi;
+                               }else if(jh === 'Mamalia')
+                               {
+                                datas = hewanMamalia;
+                               }else if(jh === 'Reptil'){
+                                datas = hewanReptil;
+                               }else if(jh === 'Invertebrata'){
+                                datas = hewanInvertebrata;
+                               }else{
+                                datas = [];
+                               }
+                               datas.forEach(data => {
+                                    xhtml += `<div class="col-md-3 mb-3">`
+                                    xhtml += `<div class="card text-center">`
+                                            xhtml += `<div class="card-body">`
+                                            xhtml += `<h4>${data.nama_hewan}</h4>`
+                                            xhtml += `<button class="btn btnDetail btn-primary mt-3" data-jenis="${data.jenis_hewan}" data-nama="${data.nama_hewan}" data-gambar="${data.gambar}" data-suara="${data.suara}">Detail</button>`
+                                    xhtml += `</div>`
+                                    xhtml += `</div>`
+                                    xhtml += `</div>`
+                                });
+                            xhtml += `</div>`
+                        xhtml += `</div>`
+                    xhtml += `</div>`
+                  xhtml += `</div>`
+                xhtml += `</div>`
+                $('.acc-item').append(xhtml)
+            });
+
+        $('body').on('click','.btnDetail',function(){
+            let nama_hewan = $(this).data('nama');
+            let jenis = $(this).data('jenis');
+            let gambar = $(this).data('gambar');
+            let suara = $(this).data('suara');
+            $('#modalDetail .modal-title').text(`Detail ${nama_hewan}`);
+            $('#modalDetail .imgModal').attr('src',gambar);
+            $('#modalDetail .modal-body #audio2 .audioSrc2').attr('src',suara);
+            $('#modalDetail .modal-body #audio2').attr('autoplay');
+            $('#modalDetail audio')[0].load();
+            $('#modalDetail audio')[0].play();
+            $('#modalDetail').modal('show');
+        })
+
+        $('#modalDetail').on('hidden.bs.modal', function(){
+            $('#modalDetail audio')[0].pause();
+            $('#modalDetail .modal-body audio .audioSrc2').attr('src','');
+            $('#modalDetail .imgModal').attr('src','');
+        })
+    </script>
+  </body>
+</html>
